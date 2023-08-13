@@ -1,12 +1,6 @@
-import express= require('express');
-import flow=require('automation-sdk');
-const app= express();
+import flow from 'automation-sdk';
 import { troubleshootFlow } from './subFlows/troubleShoot'
-// function mainflow(){
-//     const mainFlow = new flow.FacebookFlow("main_flow", "category", "1.0");
-//     mainflow
-//         .on(Triggers.INTENT, "RESTART");
-// }
+
 
 function MainFlow(){
     const mainFlow = new flow.FacebookFlow("main_flow", "category", "1.0");

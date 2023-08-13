@@ -1,0 +1,19 @@
+{
+  "dependencies": {
+    "@types/express": "^4.17.17",
+    "@types/node": "^20.4.10",
+    "automation-sdk": "^2.2.8",
+    "express": "^4.18.2",
+    "typescript": "^5.1.6"
+  },
+  "name": "automation-flows",
+  "description": "This service utilizes the Automation-SDK package to help users build custom flows using flow steps. Users can easily create and configure automated workflows tailored to their specific needs by writing code snippets that leverage the flow steps provided by the Automation-SDK package",
+  "version": "1.0.0",
+  "main": "app.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
