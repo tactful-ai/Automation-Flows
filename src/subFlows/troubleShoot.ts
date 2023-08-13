@@ -5,25 +5,24 @@ export function troubleshootFlow():flow.Flow {
         subFlow
             .check("{{payload.shootingType}}", "=", "troubleshoot1")
             //perform troubleshooting 1
-            .userInput("Is your problem solved?", "res")
-            .if(($) => {
-                
-                return true
-            })
-                // .text(['thanks for contacting us , we will always be on your side'])
-                .fire(flow.Triggers.INTENT, "AFFIRMATION")
-            .else()
-                .jump("category.main_flow")
+                .userInput({"question":"is the issue resolved?", "contextParam": "res"})
+                .if(($) => {
+                    
+                    return true
+                })
+                    .fire(flow.Triggers.INTENT, "AFFIRMATION")
+                .else()
+                    .jump("choice_category.choice_flow@1.0")
             .check("{{payload.shootingType}}", "=", "troubleshoot2") 
-                //perform troubleshooting 2
-                .userInput("Is your problem solved?", "res")
+            //perform troubleshooting 2
+                .userInput({"question":"is the issue resolved?", "contextParam": "res"})
                 .if(($) => {
                     return true
                 })
-                .fire(flow.Triggers.INTENT, "AFFIRMATION")
+                   .fire(flow.Triggers.INTENT, "AFFIRMATION")
                 .else()
-                    .jump("category.main_flow")
-                
+                    .jump("choice_category.choice_flow@1.0")
+
             .check("{{payload.shootingType}}", "=", "escalation") 
             .text([["We will escalate this to our support team and will get back to you "]])
             .endCheck()
