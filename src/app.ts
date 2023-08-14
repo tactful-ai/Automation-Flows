@@ -16,7 +16,7 @@ function MainFlow(){
         .userInput({"question":"inform us of your issue", "contextParam": "issue"}) //error occures when giving more than 1 arg
         .if(($) => { //IEexecuteParam error occures
             //check for Outages or any issues on our side 
-            return true;
+            return $.ieExecuteParams[0].status === true;
           })
               .text([
                   ['We apologize for the inconvenience we have an outage']
