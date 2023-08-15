@@ -28,7 +28,10 @@ export function troubleshootFlow():Flow {
                 .endIf()
             .endCheck()    
             .check("{{payload.shootingType}}", "=", "escalation") 
-            .text([["We will escalate this to our support team and will get back to you "]])
+            .setVariable("ticket","1989")
+            .text([["We will escalate this to our support team and will get back to you on email"]])
+            .text([["You will be able to keep track on this ticket {{params.ticket}}"]])
+            
             .endCheck()
 
     return subFlow;

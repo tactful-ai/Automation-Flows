@@ -1,4 +1,4 @@
-import flow ,{ IExecuteParam}from 'automation-sdk';
+import flow ,{ Triggers,IExecuteParam}from 'automation-sdk';
 import { troubleshootFlow } from './subFlows/troubleShoot'
 
 
@@ -6,7 +6,7 @@ export function MainFlow(){
     const mainFlow = new flow.FacebookFlow("main_flow", "category", "1.0");
     
     mainFlow
-        .on(flow.Triggers.INTENT, "RESTART")
+        .on(Triggers.INTENT, "RESTART")
         .config("case","true")
         .randomText([
             ["Welcome to our troubleshooting section", 1],
