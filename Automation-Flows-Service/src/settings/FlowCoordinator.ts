@@ -44,7 +44,7 @@ export class FlowCoordinator {
     async subscripeSyncedFlows(flows: any[]){
         const url = `${process.env.AUTOMATION_API_HOST_URL}/profiles/${configs.PROFILE_ID}/subscription`;
         const body = {
-            "flowIds": flows.map(flow => flow.id);
+            "flowIds": flows.map(flow => flow.id)
         };
         try {
             const token = configs.SERVICE_TOKEN;
