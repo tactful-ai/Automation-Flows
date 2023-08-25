@@ -1,7 +1,7 @@
 import { WebchatFlow, Triggers } from 'automation-sdk';
 
 export function webchatGreet() {
-    const greetingFlow = new WebchatFlow("greeting", "sdk");
+    const greetingFlow = new WebchatFlow("welcome", "greeting");
     greetingFlow
         .on(Triggers.INTENT, "GREETINGS")
         .text([
