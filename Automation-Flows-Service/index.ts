@@ -1,7 +1,7 @@
 import express, { Express, Request, Response } from 'express';
 import dotenv from 'dotenv';
 import { Bus, SDK, RedisExpiredEvents, Triggers, DialogController, Dialog } from 'automation-sdk';
-import { FlowCoordinator } from './src/Settings';
+import { FlowCoordinator } from './src/settings';
 import pjson from './package.json';
 import configs from './configs';
 
