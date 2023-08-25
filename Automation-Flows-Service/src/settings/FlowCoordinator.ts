@@ -56,7 +56,7 @@ export class FlowCoordinator {
     }
 
     async syncFlows() {
-        const url = `${process.env.AUTOMATION_API_HOST_URL}/default-flows/sync`;
+        const url = `${process.env.AUTOMATION_API_HOST_URL}/default-flows/sync`;        
         const defaultFlowsData = this.flowManager.getDefaultFlowsData();
         const body = JSON.parse(JSON.stringify(defaultFlowsData));
         try {

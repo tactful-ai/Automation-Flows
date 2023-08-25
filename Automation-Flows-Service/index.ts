@@ -5,8 +5,7 @@ import { FlowCoordinator } from './src/settings';
 import pjson from './package.json';
 import configs from './configs';
 
-dotenv.config({path: `../.env.${process.env.NODE_ENV}`});
-
+dotenv.config();
 const sdkConfigs = {
   serviceName: process.env.SERVICE_NAME || 'internship',
   RedisConfig: {
@@ -36,9 +35,9 @@ const sdkConfigs = {
       },
     },
     TokenConfigs: {
-      clientId: configs.CLIENT_ID,
-      clientSecret: configs.CLIENT_SECRET,
-      tokenEndpoint: configs.TOKEN_URL
+      clientId: "",
+      clientSecret: "",
+      tokenEndpoint: ""
     }
   },
   BusConfig: {
