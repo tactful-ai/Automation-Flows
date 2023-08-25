@@ -1,5 +1,5 @@
 import { FlowManager } from "automation-sdk";
-import { flowsToBeSetup } from "../Flows/setup";
+import { flowsToBeSetup } from "../flows/setup";
 import axios from "axios";
 import configs from "../../configs";
 
