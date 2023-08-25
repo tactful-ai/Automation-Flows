@@ -41,6 +41,20 @@ export class FlowCoordinator {
         }
     }
 
+    async subscripeSyncedFlows(flows: any[]){
+        const url = `${process.env.AUTOMATION_API_HOST_URL}/profiles/${configs.PROFILE_ID}/subscription`;
+        const body = {
+            "flowIds": flows.map(flow => flow.id);
+        };
+        try {
+            const token = configs.SERVICE_TOKEN;
+            const response = await axios.post(url, body, {headers: {Authorization: token}});
+            console.log('subscriped flows status', response.status);
+        } catch(error){
+            console.log('Flows didn\'t subscriped', error);
+        }
+    }
+
     async syncFlows() {
         const url = `${process.env.AUTOMATION_API_HOST_URL}/default-flows/sync`;
         const defaultFlowsData = this.flowManager.getDefaultFlowsData();
@@ -50,6 +64,9 @@ export class FlowCoordinator {
             const response = await axios.post(url, body, {headers: {Authorization: token}});
             console.log('synced flows with api', response.status);
             console.log(defaultFlowsData);
+            const syncedFlows = response.data;
+            await this.subscripeSyncedFlows(syncedFlows);
+
         } catch(error){
             console.log('Could not sync with api', error);
         }
