@@ -1,0 +1,33 @@
+{
+  "name": "automation-sdk-flows",
+  "version": "0.0.1",
+  "description": "This service utilizes the Automation-SDK package to help users build custom flows using flow steps. Users can easily create and configure automated workflows tailored to their specific needs by writing code snippets that leverage the flow steps provided by the Automation-SDK package",
+  "main": "index.js",
+  "scripts": {
+    "dev": "npm run start",
+    "build": "tsc",
+    "start": "node ./dist/index.js",
+    "login": "aws codeartifact login --tool npm --repository ucx-repo --domain tactful --domain-owner 409160330780 --region eu-west-1",
+    "redis": "docker start automation-sdk",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "version": "git push && git push --tags"
+  },
+  "author": "Automation_Flow_Team",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://bitbucket.org/slickblox/automation-sdk-partner/issues"
+  },
+  "homepage": "https://bitbucket.org/slickblox/automation-sdk-partner#readme",
+  "dependencies": {
+    "automation-sdk": "2.3.2",
+    "@tactful/common": "0.0.120",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "link": "^1.5.1",
+    "typescript": "^5.1.6"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.15",
+    "@types/node": "^18.11.18"
+  }
+}
