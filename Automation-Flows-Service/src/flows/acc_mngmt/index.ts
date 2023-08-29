@@ -20,21 +20,29 @@ export function MainFlow(){
             failureFlow: 'intern_greeting.invalidEntries@1.0'
             }}) 
         .text([["Welcome, {{params.username}}",1]])
-        .quickReply("What Do You Need?",[
-            new flow.FlowButton("1", "Account Managment",{}, accMgmtChoiceFlow()),
-            new flow.FlowButton("2", "Plan Managment",{}, planMmgtFlow()),
-            new flow.FlowButton("3", "Technical Troubleshooting",{} , troubleshootFlow()),
-            new flow.FlowButton("4", "Network Coverage",{} ,networkCoverageFlow())
+        .jump("intern_greeting.mainUserChoice@1.0")
 
-    ]);
 
         
     return mainFlow;
   }
+
+  export function mainUserChoices(){
+    const Flow = new WebchatFlow("mainUserChoice", "intern_greeting", "1.0");
+
+    Flow
+        .quickReply("What Do You Need?",[
+            new flow.FlowButton("1", "Account Managment",{}, accMgmtChoiceFlow()),
+            new flow.FlowButton("2", "Plan Managment",{}, planMmgtFlow()),
+            new flow.FlowButton("3", "Technical Troubleshooting",{} , troubleshootFlow()),
+            new flow.FlowButton("4", "Network Coverage",{} ,networkCoverageFlow()) ]);
+
+  }
+
   export function InvalidData(){
     const invalidData = new WebchatFlow("invalidEntries", "intern_greeting", "1.0");
     invalidData
-    .text([['By providing invalid data you are forced to start the flow again.']])
-    .jump("intern_greeting.mainFlow@1.0")
+        .text([['By providing invalid data you are forced to start the flow again.']])
+        .jump("intern_greeting.mainFlow@1.0");
     return invalidData;
   }

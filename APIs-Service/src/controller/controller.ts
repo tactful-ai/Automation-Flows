@@ -111,7 +111,7 @@ export async function getBalance(req : Request,res: Response,next:NextFunction){
 export async function postRecharge(req : Request,res: Response,next:NextFunction){
     
     const voucher=req.body.voucher
-    const amount=req.body.amount;
+    const amount=Number(req.body.amount);
     const userId=req.body.userId;
     
     const currentDate = new Date();

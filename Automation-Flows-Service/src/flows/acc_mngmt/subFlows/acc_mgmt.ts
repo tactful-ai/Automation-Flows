@@ -3,38 +3,48 @@ import flow ,{ Triggers,IExecuteParam}from 'automation-sdk';
 import { check_balance } from './check_balance'
 import { recharge_balance } from './recharge';
 
-export function accMgmtChoiceFlow() {
+export function accMgmtScreenFlow() {
     
-    const choiceFlow = new flow.WebchatFlow("choice_flow", "intern_greeting", "1.0");
+    const screenFlow = new flow.WebchatFlow("screenFlow", "intern_greeting", "1.0");
 
-    choiceFlow
+    screenFlow
         .check("{{config.isLogged}}", "=", "true")
-        .quickReply("What Would You Like To Do Today",[
-            new flow.FlowButton("1", "check_balance",{shootingType: "balance"}, check_balance()),
-            new flow.FlowButton("2", "recharge", { shootingType: "recharge" }, recharge_balance()),
-                ])
+        .jump("intern_greeting.choice_flow.webchat@1.0")
 
         .elseCheck()
-        .userInput({"question":"Please Enter Your Number?", "contextParam": "userNumber"}) 
-            .userInput({"question":"Please Enter Your  Password?", "contextParam": "userPass"})
-            .jump("authenticate_category.authenticate_flow.webchat@1.0")
+        .userInput({"question":"Please Enter Your Number", "contextParam": "userNumber"}) 
+            .userInput({"question":"Please Enter Your  Password", "contextParam": "userPass"})
+            .jump("intern_category.authenticateFlow.webchat@1.0")
 
         .endCheck()
        
 
+    return screenFlow
+}
+
+export function accMgmtChoiceFlow() {
+    
+    const choiceFlow = new flow.WebchatFlow("choiceFlow", "intern_greeting", "1.0");
+
+    choiceFlow
+        .quickReply("What Would You Like To Do Today",[
+            new flow.FlowButton("1", "check_balance",{shootingType: "balance"}, check_balance()),
+            new flow.FlowButton("2", "recharge", { shootingType: "recharge" }, recharge_balance()),
+            // new flow.FlowButton("3", "exit", { shootingType: "exit" }, recharge_balance()),
+                ])
     return choiceFlow
 }
 
 
 export function authenticate(){
-    const Flow = new flow.WebchatFlow("authenticate_flow", "intern_greeting", "1.0");
+    const Flow = new flow.WebchatFlow("authenticatFlow", "intern_greeting", "1.0");
     Flow
         .action(($: IExecuteParam) => {
 
-            bcrypt.hash($.context.params['userPass'], 12)
-                .then((hash: string) => {
-                    $.context.params['hashUserPass']= hash})
-                .catch((error: Error) => console.error('Error:', error));
+            // bcrypt.hash($.context.params['userPass'], 12)
+            //     .then((hash: string) => {
+            //         $.context.params['hashUserPass']= hash})
+            //     .catch((error: Error) => console.error('Error:', error));
 
         })
         .api("http://localhost:4000/signin", 'POST',{}, {
@@ -43,21 +53,17 @@ export function authenticate(){
         })
         .if(($: IExecuteParam) => {
             const bool = $.context.api.response.json.signin
-            return bool ;
+            return !bool ;
           })
-              .text([
-                  ['Loading',3]
-                    ])
-              .config("isLogged","true")
-              .config("userId","{{api.response.json.userId}}")
-              .quickReply("What Would You Like To Do Today",[
-                new flow.FlowButton("1", "check_balance",{shootingType: "balance"}, check_balance()),
-                new flow.FlowButton("2", "recharge", { shootingType: "recharge" }, recharge_balance()),
-    
-                    ])
-          .else()
-              .text(["{{api.response.json.msg}}",1])
-              .jump("choice_category.choice_flow.webchat@1.0")
+          .text([["{{api.response.json.msg}}",1]])
+          .jump("intern_greeting.screenflow.webchat@1.0")
+        
+        .else()
+          .text([['Loading...',3]])
+          .config("isLogged","true")
+          .setVariable("userId","{{api.response.json.userId}}")
+          .jump("intern_greeting.choiceFlow.webchat@1.0")
+  
           .endIf();
 
     return Flow;
