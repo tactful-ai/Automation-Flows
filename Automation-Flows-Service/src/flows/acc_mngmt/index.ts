@@ -2,7 +2,7 @@ import flow ,{ WebchatFlow,Triggers}from 'automation-sdk';
 import {accMgmtChoiceFlow} from './subFlows/acc_mgmt'
 import {planMmgtFlow} from './subFlows/plan_mgmt'
 import {networkCoverageFlow} from './subFlows/network_coverage'
-import {troubleshootFlow} from './subFlows/troubleshoot'
+import {troubleshootScreenFlow} from './subFlows/troubleshoot'
 
 export function MainFlow(){
     const mainFlow = new WebchatFlow("mainFlow", "intern_greeting", "1.0");
@@ -34,7 +34,7 @@ export function MainFlow(){
         .quickReply("What Do You Need?",[
             new flow.FlowButton("1", "Account Managment",{}, accMgmtChoiceFlow()),
             new flow.FlowButton("2", "Plan Managment",{}, planMmgtFlow()),
-            new flow.FlowButton("3", "Technical Troubleshooting",{} , troubleshootFlow()),
+            new flow.FlowButton("3", "Technical Troubleshooting",{} , troubleshootScreenFlow()),
             new flow.FlowButton("4", "Network Coverage",{} ,networkCoverageFlow()) ]);
 
   }

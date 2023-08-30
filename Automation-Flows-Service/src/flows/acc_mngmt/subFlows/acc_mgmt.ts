@@ -27,7 +27,7 @@ export function accMgmtChoiceFlow() {
     const choiceFlow = new flow.WebchatFlow("choiceFlow", "intern_greeting", "1.0");
 
     choiceFlow
-        .quickReply("What Would You Like To Do Today",[
+        .quickReply("What Would You Like To Do Today,{{params.username}}",[
             new flow.FlowButton("1", "check_balance",{shootingType: "balance"}, check_balance()),
             new flow.FlowButton("2", "recharge", { shootingType: "recharge" }, recharge_balance()),
             // new flow.FlowButton("3", "exit", { shootingType: "exit" }, recharge_balance()),

@@ -5,7 +5,7 @@ export function recharge_balance() {
     
     const Flow = new flow.WebchatFlow("rechargeFlow", "intern_greeting", "1.0");
     Flow
-   .userInput({"question":"Please Enter Value you want to recharge?", "contextParam": "voucherval"})      
+   .userInput({"question":"Please Enter Value you want to recharge", "contextParam": "voucherval"})      
    .userInput({"question":"Please Enter Your Voucher", "contextParam": "userVoucher",validation: {
     regex: "/^[A-Z0-9]{10}$/",
     errorMessage: 'Voucher Must Be UpperCase, Contain Numbers And Be 10 Characters',
