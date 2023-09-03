@@ -7,9 +7,8 @@ const schema = new Schema({
     date:{
         type:Date
     },
-    duration:{
-        type:Number
-    }  }],
+    duration:{ type:Number} 
+   }],
   
   msgHistory: [{
     date:{
@@ -17,21 +16,22 @@ const schema = new Schema({
     },
     content:{
         type:String
-    }  }],
+    }  
+  }],
   
   dataHistory:[{
     type: Number,
   }],
   
   internationalHistory:[{
-    date:{
-        type:Date
-    },
-    duration:{
-        type:Number
-    },
-    location:String
-    }],
+      date:{
+          type:Date
+      },
+      callDuration:{
+          type:Number
+      },
+      location:String
+      }],
     
   
   userId: {

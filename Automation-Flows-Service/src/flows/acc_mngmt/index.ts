@@ -1,6 +1,6 @@
 import flow ,{ WebchatFlow,Triggers}from 'automation-sdk';
 import {accMgmtChoiceFlow} from './subFlows/acc_mgmt'
-import {planMmgtFlow} from './subFlows/plan_mgmt'
+import {planMmgtScreenFlow} from './subFlows/plan_mgmt'
 import {networkCoverageFlow} from './subFlows/network_coverage'
 import {troubleshootScreenFlow} from './subFlows/troubleshoot'
 
@@ -13,17 +13,16 @@ export function MainFlow(){
             ["Welcome To Our Service", 1],
             ["Hi, How Can We Be Of Service?", 1],
             ["Greetings, How Can We Help?", 1]])
-        .userInput({"question":"What Do We Call You?", "contextParam": "username",validation: {
-            regex: "^[a-zA-Z]{3,10}$",
-            errorMessage: 'Name Must Be Of 3 Or More Letters And Not Contain Any Digits',
-            retryCount: 2,
-            failureFlow: 'intern_greeting.invalidEntries@1.0'
+        .userInput({"question":"What Do We Call You?", "contextParam": "username",
+            validation: {
+                regex: "^[a-zA-Z]{3,10}$",
+                errorMessage: 'Name Must Be Of 3 Or More Letters And Not Contain Any Digits',
+                retryCount: 2,
+                failureFlow: 'intern_greeting.invalidEntries@1.0'
             }}) 
         .text([["Welcome, {{params.username}}",1]])
         .jump("intern_greeting.mainUserChoice@1.0")
 
-
-        
     return mainFlow;
   }
 
@@ -33,7 +32,7 @@ export function MainFlow(){
     Flow
         .quickReply("What Do You Need?",[
             new flow.FlowButton("1", "Account Managment",{}, accMgmtChoiceFlow()),
-            new flow.FlowButton("2", "Plan Managment",{}, planMmgtFlow()),
+            new flow.FlowButton("2", "Plan Managment",{}, planMmgtScreenFlow()),
             new flow.FlowButton("3", "Technical Troubleshooting",{} , troubleshootScreenFlow()),
             new flow.FlowButton("4", "Network Coverage",{} ,networkCoverageFlow()) ]);
 

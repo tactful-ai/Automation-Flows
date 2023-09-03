@@ -1,4 +1,4 @@
-import flow ,{ Triggers,IExecuteParam}from 'automation-sdk';
+import flow ,{ IExecuteParam}from 'automation-sdk';
 
 
 export function recharge_balance() {

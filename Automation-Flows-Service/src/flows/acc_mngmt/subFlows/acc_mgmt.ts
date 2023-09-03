@@ -2,6 +2,7 @@ import bcrypt from 'bcrypt';
 import flow ,{ Triggers,IExecuteParam}from 'automation-sdk';
 import { check_balance } from './check_balance'
 import { recharge_balance } from './recharge';
+import { usage_history } from './usage_history';
 
 export function accMgmtScreenFlow() {
     
@@ -13,8 +14,8 @@ export function accMgmtScreenFlow() {
 
         .elseCheck()
         .userInput({"question":"Please Enter Your Number", "contextParam": "userNumber"}) 
-            .userInput({"question":"Please Enter Your  Password", "contextParam": "userPass"})
-            .jump("intern_category.authenticateFlow.webchat@1.0")
+        .userInput({"question":"Please Enter Your  Password", "contextParam": "userPass"})
+        .jump("intern_category.authenticateFlow.webchat@1.0")
 
         .endCheck()
        
@@ -28,9 +29,10 @@ export function accMgmtChoiceFlow() {
 
     choiceFlow
         .quickReply("What Would You Like To Do Today,{{params.username}}",[
-            new flow.FlowButton("1", "check_balance",{shootingType: "balance"}, check_balance()),
-            new flow.FlowButton("2", "recharge", { shootingType: "recharge" }, recharge_balance()),
-            // new flow.FlowButton("3", "exit", { shootingType: "exit" }, recharge_balance()),
+            new flow.FlowButton("1", "Check Balance",{shootingType: "balance"}, check_balance()),
+            new flow.FlowButton("2", "Recharge", { shootingType: "recharge" }, recharge_balance()),
+            new flow.FlowButton("3", "Usage History", { shootingType: "usage_history" }, usage_history()),
+            // new flow.FlowButton("3", "Back", { shootingType: "exit" }, recharge_balance()),
                 ])
     return choiceFlow
 }
@@ -41,10 +43,8 @@ export function authenticate(){
     Flow
         .action(($: IExecuteParam) => {
 
-            // bcrypt.hash($.context.params['userPass'], 12)
-            //     .then((hash: string) => {
-            //         $.context.params['hashUserPass']= hash})
-            //     .catch((error: Error) => console.error('Error:', error));
+            
+            $.context.params[`hashUserPass`]=bcrypter($.context.params[`userPass`] )
 
         })
         .api("http://localhost:4000/signin", 'POST',{}, {
@@ -67,4 +67,17 @@ export function authenticate(){
           .endIf();
 
     return Flow;
+}
+
+ async function bcrypter(password:string):Promise<string> {
+    try {
+        const hashedPassword = await bcrypt.hash(password, 12); 
+        return hashedPassword ;
+        
+    } catch (err) {
+        console.log(err)
+        return ''
+    }
+
+
 }

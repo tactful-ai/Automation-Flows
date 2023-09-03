@@ -33,8 +33,8 @@ export async function getServices(req : Request,res: Response,next:NextFunction)
     const content=req.body.content;
     const imgUrl=req.body.imgUrl;
     try {
-        const plans=await Service.findOne({})
-        return   res.json(plans);
+        const elements=await Service.findOne({})
+        return   res.json(elements);
      
     } catch (err) {
      console.error(err)
@@ -47,8 +47,9 @@ export async function postServices(req : Request,res: Response,next:NextFunction
    const title=req.body.title;
    const content=req.body.content;
    const imgUrl=req.body.imgUrl;
+   const price =req.body.price;
    try {
-       const savedPlan=await new Service({title,content,imgUrl}).save();
+       const savedPlan=await new Service({title,content,imgUrl,price}).save();
        return   res.send('success');
     
    } catch (err) {
