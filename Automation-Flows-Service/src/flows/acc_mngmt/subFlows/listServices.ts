@@ -35,7 +35,7 @@ export function list_services() {
                         "2",
                         "Unsubscribe",
                         { id: 2 },
-                        new WebchatFlow("unsubscribe_flow", "unsubscribe_category").text([['Unsubscribe']]) // Button Action (Sub-Flow)
+                        new WebchatFlow("unsubscribeFlow", "intern_category").text([['Unsubscribe']]) // Button Action (Sub-Flow)
                     )
                 ],
                 id: ''
