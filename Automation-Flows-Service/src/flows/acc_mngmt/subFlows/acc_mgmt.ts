@@ -10,7 +10,7 @@ export function accMgmtScreenFlow() {
 
     screenFlow
         .check("{{config.isLogged}}", "=", "true")
-        .jump("intern_greeting.choice_flow.webchat@1.0")
+        .jump("intern_greeting.accMgmtChoiceFlow.webchat@1.0")
 
         .elseCheck()
         .userInput({"question":"Please Enter Your Number", "contextParam": "userNumber"}) 
@@ -25,7 +25,7 @@ export function accMgmtScreenFlow() {
 
 export function accMgmtChoiceFlow() {
     
-    const choiceFlow = new flow.WebchatFlow("choiceFlow", "intern_greeting", "1.0");
+    const choiceFlow = new flow.WebchatFlow("accMgmtChoiceFlow", "intern_greeting", "1.0");
 
     choiceFlow
         .quickReply("What Would You Like To Do Today,{{params.username}}",[
@@ -62,7 +62,7 @@ export function authenticate(){
           .text([['Loading...',3]])
           .config("isLogged","true")
           .setVariable("userId","{{api.response.json.userId}}")
-          .jump("intern_greeting.choiceFlow.webchat@1.0")
+          .jump("intern_greeting.accMgmtChoiceFlow.webchat@1.0")
   
           .endIf();
 

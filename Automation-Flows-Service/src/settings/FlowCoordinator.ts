@@ -49,6 +49,8 @@ export class FlowCoordinator {
         try {
             const token = configs.SERVICE_TOKEN;
             const response = await axios.post(url, body, {headers: {Authorization: token}});
+            console.log("this is the subscribed responsesesesafasf",response)
+
             console.log('subscriped flows status', response.status);
         } catch(error){
             console.log('Flows didn\'t subscriped', error);
@@ -62,6 +64,7 @@ export class FlowCoordinator {
         try {
             const token = configs.SERVICE_TOKEN;
             const response = await axios.post(url, body, {headers: {Authorization: token}});
+            console.log("this is the sync responsesesesafasf",response)
             console.log('synced flows with api', response.status);
             console.log(defaultFlowsData);
             const syncedFlows = response.data;

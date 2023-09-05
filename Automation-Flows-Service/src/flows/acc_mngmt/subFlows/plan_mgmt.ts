@@ -1,29 +1,34 @@
-import flow ,{ IExecuteParam}from 'automation-sdk';
+import flow ,{ IExecuteParam,FlowButton}from 'automation-sdk';
 import bcrypt from 'bcrypt';
+import { list_services } from './listservice';
+import { list_Userservices } from './listuserServices';
 
 export function planMmgtScreenFlow(){
-    const mainFlow = new flow.WebchatFlow("plan_mngmt_flow", "intern_greeting", "1.0");
-    
+    const mainFlow = new flow.WebchatFlow("planMgmtScreenFlow", "intern_greeting", "1.0");
+
     mainFlow
-        .text(["Plan Managment Is Still In Development",1])
-        .jump("intern_greeting.main_flow.webchat@1.0");
-        
-    // mainFlow
-    //     .check("{{config.isLogged}}", "=", "true")
-    //     .jump("intern_greeting.choice_flow.webchat@1.0")
+        .check("{{config.isLogged}}", "=", "true")
+        .jump("intern_greeting.choice_flow.webchat@1.0")
 
-    //     .elseCheck()
-    //     .userInput({"question":"Please Enter Your Number", "contextParam": "userNumber"}) 
-    //     .userInput({"question":"Please Enter Your  Password", "contextParam": "userPass"})
-    //     .jump("intern_category.authenticateFlow.webchat@1.0")
+        .elseCheck()
+        .userInput({"question":"Please Enter Your Number", "contextParam": "userNumber"}) 
+        .userInput({"question":"Please Enter Your  Password", "contextParam": "userPass"})
+        .jump("intern_category.authenticateFlow.webchat@1.0")
 
-    //     .endCheck()
+        .endCheck()
         
 
     return mainFlow;
   }
 
-
+export function planMgmtChoices(){
+    const mainFlow = new flow.WebchatFlow("planMgmtChoices", "intern_greeting", "1.0");
+    mainFlow
+        .quickReply("Please Choose One Of The Following",[
+            new FlowButton("1", "List Services", { shoppingType: "online" }, list_services() ),
+            new FlowButton("2", "My Services", { shoppingType: "onsite" }, list_Userservices()),
+    ])
+}
   
 
 export function authenticate(){

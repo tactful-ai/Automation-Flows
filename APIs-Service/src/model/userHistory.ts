@@ -19,18 +19,23 @@ const schema = new Schema({
     }  
   }],
   
-  dataHistory:[{
-    type: Number,
-  }],
+  dataHistory:[
+    
+    {  date:{
+          type:Date
+      },
+      number:{
+          type:String
+      }}  
+  ],
   
   internationalHistory:[{
       date:{
           type:Date
       },
-      callDuration:{
-          type:Number
+      locationAndDuration:{
+          type:String
       },
-      location:String
       }],
     
   

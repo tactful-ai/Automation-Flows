@@ -4,7 +4,7 @@
 import flow ,{ Triggers,IExecuteParam,  FacebookFlow, Card, WebchatFlow, FlowButton}from 'automation-sdk';
 
 
-export function Subscribe() {
+export function subscribe() {
     
     const Flow = new flow.WebchatFlow("subscribe_flow", "intern_category", "1.0");
     Flow
@@ -13,7 +13,7 @@ export function Subscribe() {
        
     .api("https://localhost:4000/subscribe","POST",{},{
         userId:"{{params.userId}}",
-        title:"{{payload.tittle}}"
+        title:"{{payload.title}}"
         
     })
     .if(($: IExecuteParam) => {

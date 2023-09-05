@@ -1,10 +1,11 @@
 
-
-
 import flow ,{ Triggers,IExecuteParam,  FacebookFlow, Card, WebchatFlow, FlowButton}from 'automation-sdk';
+import { renew } from './renew';
+import { unsubscribe } from './unsubscribe';
 
 
-export function list_services() {
+
+export function list_Userservices() {
     
     const Flow = new flow.WebchatFlow("list_flow", "list_category", "1.0");
     Flow
@@ -18,24 +19,24 @@ export function list_services() {
         )
             .action(($: IExecuteParam)=>{
                 
-                $.context.params['elements'] = JSON.stringify($.context.api.response.json.elements)
+                $.context.params['elements'] = $.context.api.response.json.elements
                 
             })
             .dynamicCarousel("{{{params.elements}}}",{
-                title: "{{tittle}}",
+                title: "{{title}}",
                 subTitle: "{{content}}",
                 mediaURL: "{{{imgUrl}}}",
                 buttons: [
                     new FlowButton(
                         "1",
                         "Renew",
-                        { id: 1 },
-                        new WebchatFlow("renew_flow", "renew_category").text([['Renew']]) // Button Action (Sub-Flow)
-                    ), new FlowButton(
+                        { renew:"{{title}}" },
+                        renew()
+                        ), new FlowButton(
                         "2",
                         "Unsubscribe",
-                        { id: 2 },
-                        new WebchatFlow("unsubscribeFlow", "intern_category").text([['Unsubscribe']]) // Button Action (Sub-Flow)
+                        { unsub:"{{title}}" },
+                        unsubscribe()
                     )
                 ],
                 id: ''

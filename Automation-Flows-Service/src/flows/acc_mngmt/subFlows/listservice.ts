@@ -1,7 +1,5 @@
-
-
-
-import flow ,{ Triggers,IExecuteParam,  FacebookFlow, Card, WebchatFlow, FlowButton}from 'automation-sdk';
+import flow ,{ Triggers,IExecuteParam, WebchatFlow, FlowButton}from 'automation-sdk';
+import { subscribe } from './subscribe';
 
 
 export function list_services() {
@@ -12,25 +10,25 @@ export function list_services() {
 
        
         .api(
-            "https://localhost:4000/add-new-service",
+            "https://localhost:4000/list-services",
             "POST",
             {}
         )
             .action(($: IExecuteParam)=>{
                 
-                $.context.params['elements'] = JSON.stringify($.context.api.response.json.elements)
+                $.context.params['elements'] = $.context.api.response.json.elements
                 
             })
             .dynamicCarousel("{{{params.elements}}}",{
-                title: "{{tittle}}",
+                title: "{{title}}",
                 subTitle: "{{content}}",
                 mediaURL: "{{{imgUrl}}}",
                 buttons: [
                     new FlowButton(
                         "1",
-                        "Renew",
-                        { id: 1 },
-                        new WebchatFlow("subscribe_flow", "intern_category").text([['Renew']]) // Button Action (Sub-Flow)
+                        "Subscribe",
+                        { title:"{{title}}" },
+                        subscribe() // Button Action (Sub-Flow)
                     )
                 ],
                 id: ''

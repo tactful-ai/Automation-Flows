@@ -1,4 +1,4 @@
-import flow ,{ Triggers,IExecuteParam}from 'automation-sdk';
+import flow ,{ IExecuteParam, }from 'automation-sdk';
 
 
 export function usage_history(){
@@ -22,12 +22,48 @@ export function usageHistoryRetrieval(){
     const rFlow = new flow.WebchatFlow("usageHistoryRetrieveFlow", "intern_greeting", "1.0");
 
         rFlow
-            .text([["Loading...",3]])
-            .api("http://localhost:4000/history", 'POST',{}, {
-                    type:"{{payload.shootingType}}",
+            .check("{{payload.shootingType}}","=","allDetails")
+                .api("http://localhost:4000/usage-history", 'POST', {} ,{
+                    type:"allDetails",
                     userId:"{{params.userId}}"
-            })
+                })
+
+                .action(($: IExecuteParam)=>{
+                    $.context.params[`callHistory`]= $.context.api.response.json.plans.callHistory;
+                    $.context.params[`msgHistory`]= $.context.api.response.json.plans.msgHistory; 
+                    $.context.params[`dataHistory`]= $.context.api.response.json.plans.dataHistory; 
+                    $.context.params[`internationalHistory`]= $.context.api.response.json.plans.internationalHistory; 
+
+                })
+                .text([["Loading...",3]])
+                .text([["{{params.callHistory}}",1]])
+                .text([["{{params.msgHistory}}",2]])
+                .text([["{{params.dataHistory}}",3]])
+                .text([["{{params.internationalHistory}}",4]])
+                .jump("intern_greeting.choiceFlow.webchat@1.0")
+
             
+            .elseCheck()
+            .api("http://localhost:4000/usage-history", 'POST', {} ,{
+                type:"{{payload.shootingType}}",
+                userId:"{{params.userId}}"
+            })
+            .action(($:IExecuteParam)=>{
+                let data=''
+                $.context.api.response.json.plans.forEach((e:any)=>{
+                    const keys = Object.keys(e);
+                    const firstKey = keys[0];
+                    const secondKey=keys[1]
+                    const firstFieldValue = e[firstKey];
+                    const secondFieldValue=e[secondKey]
+                    data=data.concat(`${firstFieldValue} : ${secondFieldValue}\n`)   
+                })
+                $.context.params[`data`]=data
+            })
+            .endCheck()
+            .text([["Loading...",3]])
+            .text([["{{params.data}}",1]])
+            .jump("intern_greeting.choiceFlow.webchat@1.0")
 
     return rFlow;
 }

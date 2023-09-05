@@ -26,7 +26,7 @@ export function recharge_balance() {
 
     .else()
               .text(['Invalid Voucher',1])
-              .jump("intern_greeting.choiceFlow.webchat@1.0")
+              .jump("intern_greeting.accMgmtChoiceFlow.webchat@1.0")
           .endIf();    
   
     return Flow

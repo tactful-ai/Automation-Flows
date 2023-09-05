@@ -1,4 +1,5 @@
 import bcrypt from 'bcrypt'; 
+import mongoose from 'mongoose';
 import { Request, Response, NextFunction } from 'express';
 import User from './../model/userModel'
 import userBalance from './../model/balanceHistory';
@@ -153,10 +154,21 @@ export async function postUserService(req : Request,res: Response,next:NextFunct
         const retrievedPlan=await Service.findOne({'title':title});
         const retrivedUser=await userServices.findOne({'userId':userId});
         if(retrivedUser  && retrievedPlan){
-            retrivedUser.subscribedPlans.push(title)
-            retrivedUser.save()
+            if(!retrivedUser.subscribedPlans.includes(title)){
+                
+                retrivedUser.subscribedPlans.push(title)
+                retrivedUser.save()
+                res.json({
+                    msg:`You Successfully Subscribed To The ${title} Plan `
+                })
+            }else{
+                res.json({
+                    msg:`You Are Already Subscribed To The ${title} Plan `
+                })
+            }
+        }else{
             res.json({
-                msg:`You Successfully Subscribed To The ${title} Plan `
+                msg:"Subscribing Failed, Please Try Again Later"
             })
         }
      
@@ -202,6 +214,65 @@ export async function postUserService(req : Request,res: Response,next:NextFunct
                 plans:retrievedUser.subscribedPlans
             })
         }     
+    } catch (err) {
+     console.error(err)
+     return res.status(500).json({ error: 'Internal Server Error',err });
+    }
+ 
+ }
+
+ export async function getUserHistory(req : Request,res: Response,next:NextFunction){
+    interface MyDocument {
+        // Define all fields and their types here
+        callHistory: {
+          date: Date;
+          duration: number;
+        }[];
+      
+        msgHistory: {
+          date: Date;
+          content: string;
+        }[];
+      
+        dataHistory: number[];
+      
+        internationalHistory: {
+          date: Date;
+          callDuration: number;
+          location: string;
+        }[];
+        [key: string]: any;
+
+        userId: mongoose.Types.ObjectId;
+        additionalField: string;
+
+      }
+      
+    const userId=req.body.userId;
+    const type:string|null=req.body.type;
+    try {
+        if(type=="allDetails"){
+            const retrievedUser:MyDocument|null=await userHistory.findOne({'userId':userId});
+            if(retrievedUser){
+                res.json({
+                    msg:"Here Is Your History",
+                    plans:retrievedUser
+                })
+            }else{
+                res.json({
+                    msg:"No History Was Found",
+                })
+            }     
+        }else{
+
+            const retrievedUser:MyDocument|null=await userHistory.findOne({'userId':userId});
+            if(retrievedUser && type){
+                res.json({
+                    msg:"Here Is Your History",
+                    plans:retrievedUser[type]
+                })
+            }     
+        }
     } catch (err) {
      console.error(err)
      return res.status(500).json({ error: 'Internal Server Error',err });
