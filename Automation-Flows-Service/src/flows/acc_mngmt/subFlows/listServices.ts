@@ -12,7 +12,7 @@ export function list_services() {
 
        
         .api(
-            "https://localhost:4000/list-services",
+            "https://localhost:4000/list-user-services",
             "POST",
             {}
         )
