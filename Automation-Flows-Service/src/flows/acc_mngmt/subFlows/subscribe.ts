@@ -13,6 +13,7 @@ export function Subscribe() {
        
     .api("https://localhost:4000/subscribe","POST",{},{
         userId:"{{params.userId}}",
+        title:"{{payload.tittle}}"
         
     })
     .if(($: IExecuteParam) => {
