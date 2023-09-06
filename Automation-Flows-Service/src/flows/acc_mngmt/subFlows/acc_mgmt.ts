@@ -15,9 +15,9 @@ export function accMgmtScreenFlow() {
         .elseCheck()
         .userInput({"question":"Please Enter Your Number", "contextParam": "userNumber"}) 
         .userInput({"question":"Please Enter Your  Password", "contextParam": "userPass"})
-        .jump("intern_category.authenticateFlow.webchat@1.0")
+        .jump("intern_category.authenticatAccFlow.webchat@1.0")
 
-        .endCheck()
+        .endCheck();
        
 
     return screenFlow
@@ -32,14 +32,16 @@ export function accMgmtChoiceFlow() {
             new flow.FlowButton("1", "Check Balance",{shootingType: "balance"}, check_balance()),
             new flow.FlowButton("2", "Recharge", { shootingType: "recharge" }, recharge_balance()),
             new flow.FlowButton("3", "Usage History", { shootingType: "usage_history" }, usage_history()),
-            // new flow.FlowButton("3", "Back", { shootingType: "exit" }, recharge_balance()),
-                ])
-    return choiceFlow
+            new flow.FlowButton("4", "Back To Main Screen", { shootingType: "exit" },
+                new flow.WebchatFlow("accMgmtChoiceFlow", "intern_greeting", "1.0").jump("intern_greeting.mainUserChoice.webchat@1.0")
+                )
+                ]);
+    return choiceFlow;
 }
 
 
-export function authenticate(){
-    const Flow = new flow.WebchatFlow("authenticatFlow", "intern_greeting", "1.0");
+export function authenticateAcc(){
+    const Flow = new flow.WebchatFlow("authenticatAccFlow", "intern_greeting", "1.0");
     Flow
         .action(($: IExecuteParam) => {
 
@@ -62,6 +64,7 @@ export function authenticate(){
           .text([['Loading...',3]])
           .config("isLogged","true")
           .setVariable("userId","{{api.response.json.userId}}")
+          .setReminder('TimerName', "{{config.LoginTime}}", "sessionFlow")
           .jump("intern_greeting.accMgmtChoiceFlow.webchat@1.0")
   
           .endIf();

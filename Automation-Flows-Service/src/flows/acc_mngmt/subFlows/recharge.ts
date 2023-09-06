@@ -22,7 +22,7 @@ export function recharge_balance() {
             return bool ;
           })    
     .text([["New Balance is added to your Account:{{api.response.json.data}} EGP",1]])  
-    .jump("intern_greeting.mainUserChoice@1.0")
+    .jump("intern_greeting.mainUserChoice.webchat@1.0")
 
     .else()
               .text(['Invalid Voucher',1])

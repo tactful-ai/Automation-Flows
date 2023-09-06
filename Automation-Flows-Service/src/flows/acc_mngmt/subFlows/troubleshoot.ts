@@ -1,4 +1,4 @@
-import flow ,{ WebchatFlow,Triggers,Flow,FlowButton}from 'automation-sdk';
+import flow ,{ WebchatFlow,Flow,FlowButton}from 'automation-sdk';
 
 export function troubleshootScreenFlow():Flow{
     const tsFlow = new WebchatFlow("troubleshootingScreenFlow", "intern_greeting", "1.0");
@@ -43,7 +43,7 @@ export function troubleshootScreenFlow():Flow{
             "1", 
             new WebchatFlow("solvedFlow", "examples_category")
               .text([["We Are Glad To Have Helped,{{params.username}}"]])
-              .jump("intern_greeting.mainUserChoice@1.0")
+              .jump("intern_greeting.mainUserChoice.webchat@1.0")
 
         ),
         new FlowButton(
@@ -52,7 +52,7 @@ export function troubleshootScreenFlow():Flow{
             "2", 
             new WebchatFlow("UnsolvedFlow", "examples_category")
               .text([['Loading...',3]])
-              .jump("intern_greeting.escalationFlow@1.0")
+              .jump("intern_greeting.escalationFlow.webchat@1.0")
 
         ),
     ],3,["I Didn't Understand, Please choose One Of The Choices",
@@ -85,7 +85,7 @@ export function troubleshootScreenFlow():Flow{
               "1", 
               new WebchatFlow("solvedFlow", "examples_category")
                 .text([["We Are Glad To Have Helped,{{params.username}}"]])
-                .jump("intern_greeting.mainUserChoice@1.0")
+                .jump("intern_greeting.mainUserChoice.webchat@1.0")
 
           ),
           new FlowButton(
@@ -94,7 +94,7 @@ export function troubleshootScreenFlow():Flow{
               "2", 
               new WebchatFlow("UnsolvedFlow", "examples_category")
                 .text([['Loading...',3]])
-                .jump("intern_greeting.escalationFlow@1.0")
+                .jump("intern_greeting.escalationFlow.webchat@1.0")
 
           ),
       ] ,3,["I Didn't Understand, Please choose One Of The Choices",
@@ -132,7 +132,7 @@ export function troubleshootScreenFlow():Flow{
             "1", 
             new WebchatFlow("solvedFlow", "examples_category")
               .text([["We Are Glad To Have Helped,{{params.username}}"]])
-              .jump("intern_greeting.mainUserChoice@1.0")
+              .jump("intern_greeting.mainUserChoice.webchat@1.0")
 
         ),
         new FlowButton(
@@ -141,7 +141,7 @@ export function troubleshootScreenFlow():Flow{
             "2", 
             new WebchatFlow("UnsolvedFlow", "examples_category")
               .text([['Loading...',3]])
-              .jump("intern_greeting.escalationFlow@1.0")
+              .jump("intern_greeting.escalationFlow.webchat@1.0")
 
         ),
     ],3,["I Didn't Understand, Please choose One Of The Choices",
@@ -152,7 +152,7 @@ export function troubleshootScreenFlow():Flow{
   }
 
 
-  export function billingAndAccount():Flow{
+  export function billingAndAccount(){
     const baFlow = new WebchatFlow("billingAndAccountFlow", "intern_greeting", "1.0");
 
       baFlow
@@ -172,7 +172,7 @@ export function troubleshootScreenFlow():Flow{
             "1", 
             new WebchatFlow("solvedFlow", "examples_category")
               .text([["We Are Glad To Have Helped,{{params.username}}"]])
-              .jump("intern_greeting.mainUserChoice@1.0")
+              .jump("intern_greeting.mainUserChoice.webchat@1.0")
 
         ),
         new FlowButton(
@@ -181,7 +181,7 @@ export function troubleshootScreenFlow():Flow{
             "2", 
             new WebchatFlow("UnsolvedFlow", "examples_category")
               .text([['Loading...',3]])
-              .jump("intern_greeting.escalationFlow@1.0")
+              .jump("intern_greeting.escalationFlow.webchat@1.0")
         ),
     ] ,3,["I Didn't Understand, Please choose One Of The Choices",
     "Sorry, Again I Didnt Understand Please Choose One Of The Choices",
@@ -196,7 +196,7 @@ export function escalationFlow():Flow {
     subFlow
         .userInput({"question":"Please Leave Us Your Email", "contextParam": "userEmail"})
         .text([`We'll Escalate This To The Support Team And We Will Contact You,{{params.username}} `])
-        .jump("intern_greeting.mainUserChoice@1.0");
+        .jump("intern_greeting.mainUserChoice.webchat@1.0");
 
 
     return subFlow

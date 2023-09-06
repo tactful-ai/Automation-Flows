@@ -6,7 +6,7 @@ export function unsubscribe(){
        Flow 
         .api("https://localhost:4000/unsubscribe","POST",{},{
             userId:"{{params.userId}}",
-            title:"{{payload.shoppingType}}"
+            title:"{{payload.unsub}}"
         })
         .if(($: IExecuteParam) => {
             const bool = $.context.api.response.json.bool
@@ -14,11 +14,11 @@ export function unsubscribe(){
           })
               .text([['Loading',3]])
               .text([["{{api.response.json.msg}}",1]])
-            //   .jump("choice_category.choice_flow.webchat@1.0") list sservices 
+              .jump("intern_greeting.planMgmtChoices.webchat@1.0")  
 
           .else()
               .text([['{{api.response.json.msg}}',1]])
-            //   .jump("choice_category.choice_flow.webchat@1.0") list services
+              .jump("intern_greeting.planMgmtChoices.webchat@1.0") 
           .endIf();
 
     return Flow;

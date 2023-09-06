@@ -1,6 +1,6 @@
 import express, { Router } from 'express';
 import {postSignup,postSignin,getUserService,postRecharge,
-        postUserService,postServices,getServices, getBalance, deleteUserService} from './../controller/controller'
+        postUserService,postServices,getServices, getBalance, deleteUserService,renew} from './../controller/controller'
 
 const routes: Router = express.Router();
 
@@ -23,5 +23,7 @@ routes.post('/signin',postSignin)
 routes.post('/recharge',postRecharge);
 
 routes.post('/getBalance',getBalance);
+
+routes.post('/renew',renew)
 
 export { routes };

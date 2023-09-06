@@ -9,16 +9,12 @@ export function list_Userservices() {
     
     const Flow = new flow.WebchatFlow("list_flow", "list_category", "1.0");
     Flow
-        
-
-       
+        .text([["Here Are Your Subscriptions , {{params.username}}"]])
         .api(
             "https://localhost:4000/list-user-services",
             "POST",
-            {}
-        )
-            .action(($: IExecuteParam)=>{
-                
+            {})
+            .action(($: IExecuteParam)=>{  
                 $.context.params['elements'] = $.context.api.response.json.elements
                 
             })
@@ -32,7 +28,8 @@ export function list_Userservices() {
                         "Renew",
                         { renew:"{{title}}" },
                         renew()
-                        ), new FlowButton(
+                        ), 
+                    new FlowButton(
                         "2",
                         "Unsubscribe",
                         { unsub:"{{title}}" },
@@ -41,11 +38,7 @@ export function list_Userservices() {
                 ],
                 id: ''
             }
-            )
-    
-    
-     
-
+            );
     return Flow
 }
 

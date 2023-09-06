@@ -279,3 +279,36 @@ export async function postUserService(req : Request,res: Response,next:NextFunct
     }
  
  }
+
+ export async function renew(req : Request,res: Response,next:NextFunction){
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+    const currentMonth = currentDate.getMonth() + 1; // Adding 1 to the month because it's zero-based (0-11)
+    const currentDay = currentDate.getDate();
+    const currentHour = currentDate.getHours();
+    const currentMinutes = currentDate.getMinutes();
+    
+    const formattedDate = `${currentYear}-${currentMonth}-${currentDay}: ${currentHour}:${currentMinutes}`;
+    
+    const userId=req.body.userId
+    const title=req.body.title
+    try {
+        const retrievedUserBalance=await userBalance.findOne({'userId':userId});
+        const retrievedPlan=await Service.findOne({"title":title})
+        if(retrievedUserBalance&&retrievedPlan){
+            retrievedUserBalance.balance=retrievedUserBalance.balance-retrievedPlan.price
+            retrievedUserBalance.balance_history.push({detail:`${retrievedPlan.price} was removed on ${formattedDate}`})
+            res.json({
+              
+            })
+        }else{
+            res.json({
+              
+            })
+        }     
+    } catch (err) {
+     console.error(err)
+     return res.status(500).json({ error: 'Internal Server Error',err });
+    }
+ 
+ }

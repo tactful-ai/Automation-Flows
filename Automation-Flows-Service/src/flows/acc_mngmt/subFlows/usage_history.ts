@@ -36,6 +36,7 @@ export function usageHistoryRetrieval(){
 
                 })
                 .text([["Loading...",3]])
+                .text([["Max Is The Last 5 Entries In Each",1]])
                 .text([["{{params.callHistory}}",1]])
                 .text([["{{params.msgHistory}}",2]])
                 .text([["{{params.dataHistory}}",3]])
@@ -62,6 +63,7 @@ export function usageHistoryRetrieval(){
             })
             .endCheck()
             .text([["Loading...",3]])
+            .text([["Max Is The Last 5 Entries",1]])
             .text([["{{params.data}}",1]])
             .jump("intern_greeting.choiceFlow.webchat@1.0")
 

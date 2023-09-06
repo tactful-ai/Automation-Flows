@@ -1,47 +1,33 @@
-
-
-
-import flow ,{ Triggers,IExecuteParam,  FacebookFlow, Card, WebchatFlow, FlowButton}from 'automation-sdk';
+import flow ,{ IExecuteParam,  }from 'automation-sdk';
 
 
 export function renew() {
     
-    const Flow = new flow.WebchatFlow("renew_flow", "renew_category", "1.0");
+    const Flow = new flow.WebchatFlow("renew_flow", "intern_greeting", "1.0");
     Flow
-        
-        .api(
-            "https://localhost:4000/getBalance",
-            "POST",
-            {},
-            { userId:"{{params.userId}}"}
-        )
-        
+        .api("https://localhost:4000/getBalance","POST",{},{
+                 userId:"{{params.userId}}",
+                 title:"{{payload.renew}}"
+        })
             .action(($: IExecuteParam)=>{
-                
-                $.context.params['userBalance'] = JSON.stringify($.context.api.response.json.data)
-                
+                $.context.params['userBalance'] = $.context.api.response.json.data
                 
             })
-          
-            
-
             .if(($: IExecuteParam) => $.context.params['userBalance'] >= "{{payload.price}}")
-            .text([
-                ['Congrats, Your Subscribtion is renewed.']
-            ])
-
-            .jump("list_category.list_flow.webchat@1.0")
+                .api("https://localhost:4000/getBalance","POST",{},{
+                    userId:"{{params.userId}}",
+                    title:"{{payload.renew}}",
+                    })
+                .text([
+                    ['Congrats, Your Subscribtion is renewed.']
+                ])
+                .jump("intern_greeting.planMgmtChoices.webchat@1.0")
         .else()
             .text([
-                ["You don't have enough credit>"]
+                ["You don't have enough credit"]
             ])
-            .jump("list_category.list_flow.webchat@1.0")
-        .endIf()
-    
-           
-    
-    
-     
+            .jump("intern_greeting.listFlow.webchat@1.0")
+        .endIf();
 
     return Flow
 }
