@@ -23,7 +23,7 @@ export function list_services() {
                     "1",
                     "Subscribe",
                     { title:"{{title}}" },
-                    subscribe() // Button Action (Sub-Flow)
+                    subscribe() 
                 )
             ],
             id: ''

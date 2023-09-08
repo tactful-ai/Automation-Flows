@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import flow ,{ Triggers,IExecuteParam}from 'automation-sdk';
+import flow ,{ IExecuteParam}from 'automation-sdk';
 import { check_balance } from './check_balance'
 import { recharge_balance } from './recharge';
 import { usage_history } from './usage_history';
@@ -29,11 +29,11 @@ export function accMgmtChoiceFlow() {
 
     choiceFlow
         .quickReply("What Would You Like To Do Today,{{params.username}}",[
-            new flow.FlowButton("1", "Check Balance",{shootingType: "balance"}, check_balance()),
-            new flow.FlowButton("2", "Recharge", { shootingType: "recharge" }, recharge_balance()),
-            new flow.FlowButton("3", "Usage History", { shootingType: "usage_history" }, usage_history()),
-            new flow.FlowButton("4", "Back To Main Screen", { shootingType: "exit" },
-                new flow.WebchatFlow("accMgmtChoiceFlow", "intern_greeting", "1.0").jump("intern_greeting.mainUserChoice.webchat@1.0")
+            new flow.FlowButton("1", "Check Balance",{}, check_balance()),
+            new flow.FlowButton("2", "Recharge", {}, recharge_balance()),
+            new flow.FlowButton("3", "Usage History", {}, usage_history()),
+            new flow.FlowButton("4", "Back To Main Screen", {},
+                new flow.WebchatFlow("return", "intern_greeting", "1.0").jump("intern_greeting.mainUserChoice.webchat@1.0")
                 )
                 ]);
     return choiceFlow;

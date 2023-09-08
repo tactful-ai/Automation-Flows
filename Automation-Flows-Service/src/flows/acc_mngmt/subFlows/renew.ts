@@ -3,7 +3,7 @@ import flow ,{ IExecuteParam,  }from 'automation-sdk';
 
 export function renew() {
     
-    const Flow = new flow.WebchatFlow("renew_flow", "intern_greeting", "1.0");
+    const Flow = new flow.WebchatFlow("renewFlow", "intern_greeting", "1.0");
     Flow
         .api("https://localhost:4000/getBalance","POST",{},{
                  userId:"{{params.userId}}",
@@ -26,7 +26,7 @@ export function renew() {
             .text([
                 ["You don't have enough credit"]
             ])
-            .jump("intern_greeting.listFlow.webchat@1.0")
+            .jump("intern_greeting.planMgmtChoices.webchat@1.0")
         .endIf();
 
     return Flow

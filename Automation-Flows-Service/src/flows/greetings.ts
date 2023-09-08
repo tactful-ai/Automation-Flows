@@ -8,5 +8,7 @@ export function webchatGreet() {
             ['Welcome great interns to the webchat', 1],
         ])
         .fire(Triggers.INTENT,"mainFlow")
+        // .fire(Triggers.INTENT,"mainUserChoice")
+
     return greetingFlow;
 }

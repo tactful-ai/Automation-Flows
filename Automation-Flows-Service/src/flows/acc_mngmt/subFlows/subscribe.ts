@@ -6,7 +6,7 @@ import flow ,{ IExecuteParam,}from 'automation-sdk';
 
 export function subscribe() {
     
-    const Flow = new flow.WebchatFlow("subscribe_flow", "intern_category", "1.0");
+    const Flow = new flow.WebchatFlow("subscribeFlow", "intern_category", "1.0");
     Flow
         
       .api("https://localhost:4000/subscribe","POST",{},{
@@ -24,7 +24,7 @@ export function subscribe() {
 
         .else()
             .text([['{{api.response.json.msg}}',1]])
-          .jump("choice_category.listFlow.webchat@1.0") 
+          .jump("choice_category.planMgmtChoices.webchat@1.0") 
         .endIf();
 
     return Flow

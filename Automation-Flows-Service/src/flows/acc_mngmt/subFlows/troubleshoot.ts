@@ -1,4 +1,4 @@
-import flow ,{ WebchatFlow,Flow,FlowButton}from 'automation-sdk';
+import flow ,{ WebchatFlow,Flow,FlowButton, Triggers}from 'automation-sdk';
 
 export function troubleshootScreenFlow():Flow{
     const tsFlow = new WebchatFlow("troubleshootingScreenFlow", "intern_greeting", "1.0");
@@ -14,34 +14,29 @@ export function troubleshootScreenFlow():Flow{
   }
 
   export function networkConnectivity():Flow{
-    const ncFlow = new WebchatFlow("troubleshootingScreenFlow", "intern_greeting", "1.0");
+    const ncFlow = new WebchatFlow("networkConnectivity", "intern_networkConnectivitiy", "1.0");
     
       ncFlow
         .text([["Try And Follow These Steps,{{params.username}}",1]])
         .text([[
          `1-Locate the signal bars or signal strength indicator on your device
-          2-Observe the number of bars or the signal icon; more bars indicate a stronger signal
-          `
+          2-Observe the number of bars or the signal icon; more bars indicate a stronger signal`
         , 1]])
         .text([[
           `3-Improve your signal by moving to a window or less crowded area if needed
-           4-Recheck the signal strength, aiming for an improvement
-           `
+           4-Recheck the signal strength, aiming for an improvement`
          , 2]])
-        .text([[`
-            5-Determine if you're using Wi-Fi or mobile data for your internet connection
-            6-If you're on Wi-Fi, check if other devices are also experiencing slow speeds on the same network
+        .text([[`5-Determine if you're using Wi-Fi or mobile data for your internet connection
+        6-If you're on Wi-Fi, check if other devices are also experiencing slow speeds on the same network
         `,3]])
-        .text([[`
-            7-If you're on mobile data, consider switching to a different network type (e.g., 4G or 3G) to see if it improves your connection
-            8-Re-test your internet speed to see if there's any improvement
-        `,4]])
+        .text([[`7-If you're on mobile data, consider switching to a different network type (e.g., 4G or 3G) to see if it improves your connection
+        8-Re-test your internet speed to see if there's any improvement`,4]])
        .quickReply("Was The Issue Resolved ,{{params.username}}?", [
         new FlowButton(
             "1", 
             "Yes", 
             "1", 
-            new WebchatFlow("solvedFlow", "examples_category")
+            new WebchatFlow("solvedFlow", "intern_solved")
               .text([["We Are Glad To Have Helped,{{params.username}}"]])
               .jump("intern_greeting.mainUserChoice.webchat@1.0")
 
@@ -50,7 +45,7 @@ export function troubleshootScreenFlow():Flow{
             "2", 
             "No", 
             "2", 
-            new WebchatFlow("UnsolvedFlow", "examples_category")
+            new WebchatFlow("UnsolvedFlow", "intern_unsolved")
               .text([['Loading...',3]])
               .jump("intern_greeting.escalationFlow.webchat@1.0")
 
@@ -62,7 +57,7 @@ export function troubleshootScreenFlow():Flow{
   }
 
   export function callQuality():Flow{
-    const cqFlow = new WebchatFlow("callQualityFlow", "intern_greeting", "1.0");
+    const cqFlow = new WebchatFlow("callQualityFlow", "intern_callquality", "1.0");
       cqFlow
         .text([["Try And Follow These Steps,{{params.username}}",1]])
           .text([[
@@ -105,7 +100,7 @@ export function troubleshootScreenFlow():Flow{
   }
 
   export function dataSpeed():Flow{
-    const dsFlow = new WebchatFlow("dataSpeedFLow", "intern_greeting", "1.0");
+    const dsFlow = new WebchatFlow("dataSpeedFLow", "intern_dataspeed", "1.0");
 
       dsFlow
         .text([["Try And Follow These Steps,{{params.username}}",1]])
@@ -153,7 +148,7 @@ export function troubleshootScreenFlow():Flow{
 
 
   export function billingAndAccount(){
-    const baFlow = new WebchatFlow("billingAndAccountFlow", "intern_greeting", "1.0");
+    const baFlow = new WebchatFlow("billingAndAccountFlow", "intern_billandacc", "1.0");
 
       baFlow
         .text([["Try And Follow These Steps,{{params.username}}",1]])

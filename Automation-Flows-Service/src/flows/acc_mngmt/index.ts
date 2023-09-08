@@ -1,13 +1,14 @@
 import flow ,{ WebchatFlow,Triggers}from 'automation-sdk';
-import {accMgmtChoiceFlow} from './subFlows/acc_mgmt'
+import {accMgmtScreenFlow} from './subFlows/acc_mgmt'
 import {planMmgtScreenFlow} from './subFlows/plan_mgmt'
 import {troubleshootScreenFlow} from './subFlows/troubleshoot'
 
-export function MainFlow(){
+  export function MainFlow(){
     const mainFlow = new WebchatFlow("mainFlow", "intern_greeting", "1.0");
     
     mainFlow
         .on(Triggers.INTENT, "mainFlow")
+        .on(Triggers.INTENT, "RESTART")
         .config("LoginTime", "900")
         .randomText([
             ["Welcome To Our Service", 1],
@@ -18,32 +19,31 @@ export function MainFlow(){
                 regex: "^[a-zA-Z]{3,10}$",
                 errorMessage: 'Name Must Be Of 3 Or More Letters And Not Contain Any Digits',
                 retryCount: 2,
-                failureFlow: 'intern_greeting.invalidEntries.webchat@1.0'
+                failureFlow: "intern_greeting.invalidEntries.webchat@1.0"
             }}) 
-        // .text([["Welcome, {{params.username}}",1]])
-        .fire(Triggers.INTENT,"mainUserChoice")
-
-        // .jump("intern_choice.mainUserChoice.webchat@1.0");
-
-    return mainFlow;
-  }
-
+        // .fire(Triggers.INTENT,"mainUserChoice")
+            .jump("intern_greeting.mainUserChoice.webchat@1.0");
+                    
+            return mainFlow;
+          }
+          
   export function mainUserChoices(){
-    const Flow = new WebchatFlow("mainUserChoice", "intern_choice", "1.0");
-
-    Flow
+      const Flow = new WebchatFlow("mainUserChoice", "intern_greeting", "1.0");
+      
+      Flow
         .on(Triggers.INTENT,"mainUserChoice")
+        .text([["Welcome, {{params.username}}",1]])
         .quickReply("What Do You Need?,{{params.username}}",[
-            new flow.FlowButton("1", "Account Managment",{}, accMgmtChoiceFlow()),
-            new flow.FlowButton("2", "Plan Managment",{}, planMmgtScreenFlow()),
-            new flow.FlowButton("3", "Technical Troubleshooting",{} , troubleshootScreenFlow()),
-]);
-  return Flow
+          new flow.FlowButton("1", "Account Managment",{}, accMgmtScreenFlow()),
+          new flow.FlowButton("2", "Plan Managment",{}, planMmgtScreenFlow()),
+          new flow.FlowButton("3", "Technical Troubleshooting",{} , troubleshootScreenFlow()) ]);
+      return Flow
   }
 
   export function InvalidData(){
     const invalidData = new WebchatFlow("invalidEntries", "intern_greeting", "1.0");
     invalidData
+        .on(Triggers.INTENT, "invalid")
         .text([['By providing invalid data you are forced to start the flow again.']])
         .jump("intern_greeting.mainFlow.webchat@1.0");
     return invalidData;
