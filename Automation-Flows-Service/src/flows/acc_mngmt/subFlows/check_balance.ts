@@ -9,7 +9,7 @@ export function check_balance() {
                 userId:"{{params.userId}}",
                 })
             .text([["Here Is Your Current Balance:{{api.response.json.data}}",1]])
-            .jump("intern_greeting.mainUserChoice.webchat@1.0");
+            .jump("intern_userChoice.mainUserChoice.webchat@1.0");
 
             
     return Flow

@@ -41,7 +41,7 @@ export function usageHistoryRetrieval(){
                 .text([["{{params.msgHistory}}",2]])
                 .text([["{{params.dataHistory}}",3]])
                 .text([["{{params.internationalHistory}}",4]])
-                .jump("intern_greeting.choiceFlow.webchat@1.0")
+                .jump("intern_accChoice.accMgmtChoiceFlow.webchat@1.0")
 
             
             .elseCheck()
@@ -65,7 +65,7 @@ export function usageHistoryRetrieval(){
             .text([["Loading...",3]])
             .text([["Max Is The Last 5 Entries",1]])
             .text([["{{params.data}}",1]])
-            .jump("intern_greeting.choiceFlow.webchat@1.0")
+            .jump("intern_accChoice.accMgmtChoiceFlow.webchat@1.0")
 
     return rFlow;
 }

@@ -12,7 +12,7 @@ export function recharge_balance() {
     retryCount: 2,
     failureFlow: 'choice_category.choice_flow.webchat@1.0'
     }})
-    .api("http://localhost:4000/recharge", 'POST', {
+    .api("http://localhost:4000/recharge", 'POST',{} ,{
             voucher:"{{params.userVoucher}}",
             amount:"{{params.voucherval}}",
             userId:"{{params.userId}}"
@@ -22,12 +22,12 @@ export function recharge_balance() {
             return bool ;
           })    
     .text([["New Balance is added to your Account:{{api.response.json.data}} EGP",1]])  
-    .jump("intern_greeting.mainUserChoice.webchat@1.0")
+    .jump("intern_accChoice.accMgmtChoiceFlow.webchat@1.0")
 
     .else()
               .text(['Invalid Voucher',1])
-              .jump("intern_greeting.accMgmtChoiceFlow.webchat@1.0")
-          .endIf();    
+              .jump("intern_accChoice.accMgmtChoiceFlow.webchat@1.0")
+              .endIf();    
   
     return Flow
 }

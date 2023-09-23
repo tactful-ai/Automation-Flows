@@ -14,12 +14,12 @@ export function unsubscribe(){
           })
               .text([['Loading',3]])
               .text([["{{api.response.json.msg}}",1]])
-              .jump("intern_greeting.planMgmtChoices.webchat@1.0")  
+              .jump("intern_planChoices.planMgmtChoices.webchat@1.0")  
 
           .else()
               .text([['{{api.response.json.msg}}',1]])
-              .jump("intern_greeting.planMgmtChoices.webchat@1.0") 
-          .endIf();
+              .jump("intern_planChoices.planMgmtChoices.webchat@1.0")  
+              .endIf();
 
     return Flow;
 

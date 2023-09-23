@@ -5,11 +5,11 @@ export function troubleshootScreenFlow():Flow{
     
     tsFlow
     .quickReply("What Do You Need?",[
-        new flow.FlowButton("1", "Network Connectivity Issues",{}, networkConnectivity()),
-        new flow.FlowButton("2", "Call Quality Problems",{}, callQuality()),
-        new flow.FlowButton("3", "Slow Data Speed",{} , dataSpeed()),
-        new flow.FlowButton("4", "Billing and Account-Related Issues",{} ,billingAndAccount()) ]);
-        
+      new flow.FlowButton("1", "Network Connectivity Issues",{shootingType:"network"}, networkConnectivity()),
+      new flow.FlowButton("2", "Call Quality Problems",{shootingType:"callquality"}, callQuality()),
+      new flow.FlowButton("3", "Slow Data Speed",{shootingType:"dataspeed"} , dataSpeed()),
+      new flow.FlowButton("4", "Billing and Account-Related Issues",{shootingType:"billingandacc"} ,billingAndAccount()) ]);
+      
     return tsFlow;
   }
 
@@ -38,8 +38,7 @@ export function troubleshootScreenFlow():Flow{
             "1", 
             new WebchatFlow("solvedFlow", "intern_solved")
               .text([["We Are Glad To Have Helped,{{params.username}}"]])
-              .jump("intern_greeting.mainUserChoice.webchat@1.0")
-
+              .jump("intern_userChoice.mainUserChoice.webchat@1.0")
         ),
         new FlowButton(
             "2", 
@@ -80,8 +79,7 @@ export function troubleshootScreenFlow():Flow{
               "1", 
               new WebchatFlow("solvedFlow", "examples_category")
                 .text([["We Are Glad To Have Helped,{{params.username}}"]])
-                .jump("intern_greeting.mainUserChoice.webchat@1.0")
-
+                .jump("intern_userChoice.mainUserChoice.webchat@1.0")
           ),
           new FlowButton(
               "2", 
@@ -127,8 +125,7 @@ export function troubleshootScreenFlow():Flow{
             "1", 
             new WebchatFlow("solvedFlow", "examples_category")
               .text([["We Are Glad To Have Helped,{{params.username}}"]])
-              .jump("intern_greeting.mainUserChoice.webchat@1.0")
-
+              .jump("intern_userChoice.mainUserChoice.webchat@1.0")
         ),
         new FlowButton(
             "2", 
@@ -167,8 +164,7 @@ export function troubleshootScreenFlow():Flow{
             "1", 
             new WebchatFlow("solvedFlow", "examples_category")
               .text([["We Are Glad To Have Helped,{{params.username}}"]])
-              .jump("intern_greeting.mainUserChoice.webchat@1.0")
-
+              .jump("intern_userChoice.mainUserChoice.webchat@1.0")
         ),
         new FlowButton(
             "2", 
@@ -191,8 +187,7 @@ export function escalationFlow():Flow {
     subFlow
         .userInput({"question":"Please Leave Us Your Email", "contextParam": "userEmail"})
         .text([`We'll Escalate This To The Support Team And We Will Contact You,{{params.username}} `])
-        .jump("intern_greeting.mainUserChoice.webchat@1.0");
-
+        .jump("intern_userChoice.mainUserChoice.webchat@1.0")
 
     return subFlow
 }

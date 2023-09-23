@@ -19,8 +19,10 @@
   },
   "homepage": "https://bitbucket.org/slickblox/automation-sdk-partner#readme",
   "dependencies": {
-    "automation-sdk": "2.3.2",
     "@tactful/common": "0.0.120",
+    "@types/bcrypt": "^5.0.0",
+    "automation-sdk": "2.3.2",
+    "bcrypt": "^5.1.1",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "link": "^1.5.1",

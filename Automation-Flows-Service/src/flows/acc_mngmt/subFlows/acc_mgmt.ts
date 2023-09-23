@@ -10,12 +10,17 @@ export function accMgmtScreenFlow() {
 
     screenFlow
         .check("{{config.isLogged}}", "=", "true")
-        .jump("intern_greeting.accMgmtChoiceFlow.webchat@1.0")
+        .jump("intern_accChoice.accMgmtChoiceFlow.webchat@1.0")
 
         .elseCheck()
-        .userInput({"question":"Please Enter Your Number", "contextParam": "userNumber"}) 
+        .userInput({"question":"Please Enter Your Number", "contextParam": "userNumber",validation: {
+            regex: "^[0-9]{10}$",
+            errorMessage: 'Number Must Be Of 10 Digits',
+            retryCount: 2,
+            failureFlow: "intern_greeting.invalidEntries.webchat@1.0"
+        }}) 
         .userInput({"question":"Please Enter Your  Password", "contextParam": "userPass"})
-        .jump("intern_category.authenticatAccFlow.webchat@1.0")
+        .jump("intern_authenticateAcc.authenticatAccFlow.webchat@1.0")
 
         .endCheck();
        
@@ -25,15 +30,15 @@ export function accMgmtScreenFlow() {
 
 export function accMgmtChoiceFlow() {
     
-    const choiceFlow = new flow.WebchatFlow("accMgmtChoiceFlow", "intern_greeting", "1.0");
+    const choiceFlow = new flow.WebchatFlow("accMgmtChoiceFlow", "intern_accChoice", "1.0");
 
     choiceFlow
         .quickReply("What Would You Like To Do Today,{{params.username}}",[
-            new flow.FlowButton("1", "Check Balance",{}, check_balance()),
-            new flow.FlowButton("2", "Recharge", {}, recharge_balance()),
-            new flow.FlowButton("3", "Usage History", {}, usage_history()),
-            new flow.FlowButton("4", "Back To Main Screen", {},
-                new flow.WebchatFlow("return", "intern_greeting", "1.0").jump("intern_greeting.mainUserChoice.webchat@1.0")
+            new flow.FlowButton("1", "Check Balance",{shootingType:"check_balance"},check_balance()),
+            new flow.FlowButton("2", "Recharge", {shootingType:"recharge"}, recharge_balance()),
+            new flow.FlowButton("3", "Usage History", {shootingType:"usagehistory"}, usage_history()),
+            new flow.FlowButton("4", "Back To Main Screen", {shootingType:"return"},
+                 new flow.WebchatFlow("return", "intern_greeting", "1.0").jump("intern_greeting.mainUserChoice.webchat@1.0")
                 )
                 ]);
     return choiceFlow;
@@ -41,7 +46,7 @@ export function accMgmtChoiceFlow() {
 
 
 export function authenticateAcc(){
-    const Flow = new flow.WebchatFlow("authenticatAccFlow", "intern_greeting", "1.0");
+    const Flow = new flow.WebchatFlow("authenticatAccFlow", "intern_authenticateAcc", "1.0");
     Flow
         .action(($: IExecuteParam) => {
 
@@ -65,21 +70,21 @@ export function authenticateAcc(){
           .config("isLogged","true")
           .setVariable("userId","{{api.response.json.userId}}")
           .setReminder('TimerName', "{{config.LoginTime}}", "sessionFlow")
-          .jump("intern_greeting.accMgmtChoiceFlow.webchat@1.0")
+          .jump("intern_accChoice.accMgmtChoiceFlow.webchat@1.0")
   
           .endIf();
 
     return Flow;
 }
 
- async function bcrypter(password:string):Promise<string> {
+  function bcrypter(password:string):string {
     try {
-        const hashedPassword = await bcrypt.hash(password, 12); 
-        return hashedPassword ;
-        
+        const salt = bcrypt.genSaltSync(12); 
+        const hashedPassword = bcrypt.hashSync(password, salt); 
+        return hashedPassword;
     } catch (err) {
-        console.log(err)
-        return ''
+        console.log(err);
+        return '';
     }
 
 

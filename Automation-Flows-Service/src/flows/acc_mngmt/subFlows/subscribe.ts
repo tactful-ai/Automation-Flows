@@ -1,6 +1,3 @@
-
-
-
 import flow ,{ IExecuteParam,}from 'automation-sdk';
 
 
@@ -11,7 +8,8 @@ export function subscribe() {
         
       .api("https://localhost:4000/subscribe","POST",{},{
           userId:"{{params.userId}}",
-          title:"{{payload.title}}"
+          title:"{{payload.title}}",
+          price:"{{payload.price}}"
           
       })
       .if(($: IExecuteParam) => {
@@ -20,11 +18,11 @@ export function subscribe() {
         })
             .text([['Loading',3]])
             .text([["{{api.response.json.msg}}",1]])
-          .jump("choice_category.planMgmtChoices.webchat@1.0")  
+          .jump("intern_planChoices.planMgmtChoices.webchat@1.0")  
 
         .else()
             .text([['{{api.response.json.msg}}',1]])
-          .jump("choice_category.planMgmtChoices.webchat@1.0") 
+          .jump("intern_planChoices.planMgmtChoices.webchat@1.0") 
         .endIf();
 
     return Flow

@@ -21,12 +21,12 @@ export function renew() {
                 .text([
                     ['Congrats, Your Subscribtion is renewed.']
                 ])
-                .jump("intern_greeting.planMgmtChoices.webchat@1.0")
+                .jump("intern_planChoices.planMgmtChoices.webchat@1.0")
         .else()
             .text([
                 ["You don't have enough credit"]
             ])
-            .jump("intern_greeting.planMgmtChoices.webchat@1.0")
+            .jump("intern_planChoices.planMgmtChoices.webchat@1.0")
         .endIf();
 
     return Flow
