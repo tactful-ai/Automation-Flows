@@ -1,0 +1,47 @@
+{
+  "status": "NEW",
+  "questions": [
+    {
+      "id": "1",
+      "question": "enter your name?",
+      "contextParam": "username",
+      "answer": "",
+      "validation": {
+        "failureCount": 0,
+        "regex": "[a-z]",
+        "errorMessage": "invalid username",
+        "retryCount": 2,
+        "failureFlow": "Failure flow initiated"
+      },
+      "asked": false
+    },
+    {
+      "id": "2",
+      "question": "enter your age?",
+      "contextParam": "age",
+      "answer": "",
+      "validation": {
+        "failureCount": 0,
+        "regex": "[0-9]",
+        "errorMessage": "invalid age",
+        "retryCount": 2,
+        "failureFlow": "Failure flow initiated"
+      },
+      "asked": false
+    },
+    {
+      "id": "3",
+      "question": "enter your hobby?",
+      "contextParam": "hobby",
+      "answer": "",
+      "validation": {
+        "failureCount": 0,
+        "regex": "",
+        "errorMessage": "invalid age",
+        "retryCount": 2,
+        "failureFlow": "Failure flow initiated"
+      },
+      "asked": false
+    }
+  ]
+}

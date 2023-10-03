@@ -1,0 +1,27 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaVersion": "latest",
+        "sourceType": "module"
+    },
+    "plugins": [
+        "@typescript-eslint"
+    ],
+    "rules": {
+        "semi": ["error", "always"], // Require semicolons at the end of statements
+    "quotes": ["error", "single"], // Enforce single quotes for string literals
+    "prefer-const": "error", // Prefer using const for variables that won't be reassigned
+    "no-var": "error", // Disallow using var to declare variables
+    "no-console": "off", // Allow console.log statements (you can change this based on your needs)
+    "arrow-parens": ["error", "always"], // Require parentheses around arrow function parameters
+    "no-unused-vars": "warn" // Warn about unused variables
+    }
+}

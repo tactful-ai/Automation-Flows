@@ -1,0 +1,23 @@
+{
+  "dependencies": {
+    "@types/node": "^20.6.2",
+    "readline-sync": "^1.4.10"
+  },
+  "devDependencies": {
+    "@types/readline-sync": "^1.4.4",
+    "@typescript-eslint/eslint-plugin": "^6.7.2",
+    "@typescript-eslint/parser": "^6.7.2",
+    "chai": "^4.3.8",
+    "eslint": "^8.50.0",
+    "mocha": "^10.2.0"
+  },
+  "name": "formstep",
+  "version": "1.0.0",
+  "main": "formStep.js",
+  "scripts": {
+    "test": "node ./node_modules/mocha/bin/mocha"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
